@@ -3,6 +3,8 @@ package com.example.springbootjjwt2.model;
 import com.example.springbootjjwt2.security.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,17 +13,27 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ToString @AllArgsConstructor @NoArgsConstructor
+/**
+ * Application user account.
+ */
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Document
 public class User implements UserDetails {
 
-    private String username;
 
+    private String username;
+    @ToString.Exclude
     private String password;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private Boolean enabled;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private List<Role> roles;
 
 
@@ -42,7 +54,6 @@ public class User implements UserDetails {
     }
 
 
-
     @Override
     public boolean isAccountNonExpired() {
         return false;
@@ -60,7 +71,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 
 }
