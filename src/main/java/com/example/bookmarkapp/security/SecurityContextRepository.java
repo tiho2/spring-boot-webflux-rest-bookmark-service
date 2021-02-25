@@ -1,4 +1,4 @@
-package com.example.springbootjjwt2.security;
+package com.example.bookmarkapp.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

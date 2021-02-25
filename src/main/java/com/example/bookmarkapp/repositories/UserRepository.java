@@ -1,6 +1,6 @@
-package com.example.springbootjjwt2.repositories;
+package com.example.bookmarkapp.repositories;
 
-import com.example.springbootjjwt2.model.User;
+import com.example.bookmarkapp.model.User;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Service;
 

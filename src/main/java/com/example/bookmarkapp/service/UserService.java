@@ -1,14 +1,12 @@
-package com.example.springbootjjwt2.service;
+package com.example.bookmarkapp.service;
 
-import com.example.springbootjjwt2.model.User;
-import com.example.springbootjjwt2.security.PBKDF2Encoder;
-import com.example.springbootjjwt2.security.model.Role;
+import com.example.bookmarkapp.model.User;
+import com.example.bookmarkapp.security.PBKDF2Encoder;
+import com.example.bookmarkapp.security.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

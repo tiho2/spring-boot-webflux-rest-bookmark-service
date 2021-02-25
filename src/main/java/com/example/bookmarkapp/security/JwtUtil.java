@@ -1,6 +1,6 @@
-package com.example.springbootjjwt2.security;
+package com.example.bookmarkapp.security;
 
-import com.example.springbootjjwt2.model.User;
+import com.example.bookmarkapp.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

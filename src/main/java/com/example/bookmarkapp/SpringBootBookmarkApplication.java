@@ -1,4 +1,4 @@
-package com.example.springbootjjwt2;
+package com.example.bookmarkapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

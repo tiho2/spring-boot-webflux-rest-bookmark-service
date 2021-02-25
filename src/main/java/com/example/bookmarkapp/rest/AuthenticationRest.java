@@ -1,12 +1,11 @@
-package com.example.springbootjjwt2.rest;
+package com.example.bookmarkapp.rest;
 
 
-import com.example.springbootjjwt2.security.JwtUtil;
-import com.example.springbootjjwt2.security.PBKDF2Encoder;
-import com.example.springbootjjwt2.security.model.AuthRequest;
-import com.example.springbootjjwt2.security.model.AuthResponse;
-import com.example.springbootjjwt2.service.UserService;
-import io.jsonwebtoken.Jwt;
+import com.example.bookmarkapp.security.JwtUtil;
+import com.example.bookmarkapp.security.PBKDF2Encoder;
+import com.example.bookmarkapp.security.model.AuthRequest;
+import com.example.bookmarkapp.security.model.AuthResponse;
+import com.example.bookmarkapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

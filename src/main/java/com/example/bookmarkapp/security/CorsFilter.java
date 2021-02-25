@@ -1,4 +1,4 @@
-package com.example.springbootjjwt2.security;
+package com.example.bookmarkapp.security;
 
 
 import org.springframework.context.annotation.Configuration;

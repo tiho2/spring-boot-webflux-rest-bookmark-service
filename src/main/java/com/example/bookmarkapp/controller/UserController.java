@@ -1,6 +1,6 @@
-package com.example.springbootjjwt2.controller;
+package com.example.bookmarkapp.controller;
 
-import com.example.springbootjjwt2.repositories.UserRepository;
+import com.example.bookmarkapp.repositories.UserRepository;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

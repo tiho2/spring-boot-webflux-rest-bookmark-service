@@ -1,4 +1,4 @@
-package com.example.springbootjjwt2.security;
+package com.example.bookmarkapp.security;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,6 @@
-package com.example.springbootjjwt2.rest;
+package com.example.bookmarkapp.rest;
 
 
-import com.example.springbootjjwt2.model.Bookmark;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,9 +1,8 @@
-package com.example.springbootjjwt2.model;
+package com.example.bookmarkapp.model;
 
-import com.example.springbootjjwt2.security.model.Role;
+import com.example.bookmarkapp.security.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

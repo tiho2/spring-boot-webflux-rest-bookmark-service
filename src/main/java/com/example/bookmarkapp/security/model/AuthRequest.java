@@ -1,4 +1,4 @@
-package com.example.springbootjjwt2.security.model;
+package com.example.bookmarkapp.security.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
