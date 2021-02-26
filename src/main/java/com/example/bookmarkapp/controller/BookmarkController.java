@@ -2,6 +2,7 @@ package com.example.bookmarkapp.controller;
 
 import com.example.bookmarkapp.model.Bookmark;
 import com.example.bookmarkapp.repositories.BookmarkRepository;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.security.Principal;
 public class BookmarkController {
 
     private BookmarkRepository bookmarkRepository;
+    UrlValidator urlValidator = new UrlValidator();
 
     public BookmarkController(BookmarkRepository bookmarkRepository) {
         this.bookmarkRepository = bookmarkRepository;
@@ -55,7 +57,10 @@ public class BookmarkController {
     @PostMapping("api/v1/bookmarks")
     @PreAuthorize("hasRole('USER')")
     Mono<Bookmark> create (@RequestBody Bookmark bookmark, Principal principal){
-        return bookmarkRepository.save( Bookmark.builder().url(bookmark.getUrl()).shared(bookmark.getShared()).owner(principal.getName()).build());
+        if(urlValidator.isValid(bookmark.getUrl())){
+            return bookmarkRepository.save( Bookmark.builder().url(bookmark.getUrl()).shared(bookmark.getShared()).owner(principal.getName()).build());
+        }
+        else return Mono.empty();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
