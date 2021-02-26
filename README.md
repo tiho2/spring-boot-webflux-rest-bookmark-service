@@ -223,7 +223,7 @@ OpenAPI:
                 "tags": [
                     "bookmark-controller"
                 ],
-                "operationId": "listMyOtherBookmarks",
+                "operationId": "listOtherBookmarks",
                 "responses": {
                     "302": {
                         "description": "Found",
