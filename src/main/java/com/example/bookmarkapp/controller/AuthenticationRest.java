@@ -1,11 +1,11 @@
-package com.example.bookmarkapp.rest;
+package com.example.bookmarkapp.controller;
 
 
+import com.example.bookmarkapp.repositories.UserRepository;
 import com.example.bookmarkapp.security.JwtUtil;
 import com.example.bookmarkapp.security.PBKDF2Encoder;
 import com.example.bookmarkapp.security.model.AuthRequest;
 import com.example.bookmarkapp.security.model.AuthResponse;
-import com.example.bookmarkapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +22,11 @@ public class AuthenticationRest {
     @Autowired
     private PBKDF2Encoder passwordEncoder;
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
     public Mono<ResponseEntity<?>> login(@RequestBody AuthRequest ar) {
-        return userService.findByUsername(ar.getUsername()).map((userDetails) -> {
+        return userRepository.findById(ar.getUsername()).map((userDetails) -> {
             if (passwordEncoder.encode(ar.getPassword()).equals(userDetails.getPassword())) {
                 return ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(userDetails)));
             } else {
