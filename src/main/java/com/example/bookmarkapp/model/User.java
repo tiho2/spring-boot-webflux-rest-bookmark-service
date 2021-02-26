@@ -3,6 +3,7 @@ package com.example.bookmarkapp.model;
 import com.example.bookmarkapp.security.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 @Document
 public class User implements UserDetails {
 
-
+    @Id
     private String username;
     @ToString.Exclude
     private String password;
