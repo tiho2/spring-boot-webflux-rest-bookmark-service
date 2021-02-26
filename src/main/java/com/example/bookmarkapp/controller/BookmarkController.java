@@ -35,7 +35,7 @@ public class BookmarkController {
     @RequestMapping(value = "/api/v1/bookmarks/other", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.FOUND)
     @PreAuthorize("hasRole('USER')")
-    Flux<Bookmark> listMyOtherBookmarks(Principal principal) {
+    Flux<Bookmark> listOtherBookmarks(Principal principal) {
         return this.bookmarkRepository.findAll().filter(b -> (!b.getOwner().equals(principal.getName())) && b.getShared().equals(Boolean.TRUE));
     }
 
