@@ -7,7 +7,6 @@ import com.example.bookmarkapp.repositories.UserRepository;
 import com.example.bookmarkapp.security.PBKDF2Encoder;
 import com.example.bookmarkapp.security.model.Role;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -43,25 +42,11 @@ public class Bootstrap implements CommandLineRunner {
             bookmarkRepository.save(Bookmark.builder().url("https://www.redhat.com").owner(admin.getUsername()).shared(Boolean.FALSE).build()).block();
             bookmarkRepository.save(Bookmark.builder().url("https://aws.amazon.com/?nc2=h_lg").owner(admin.getUsername()).shared(Boolean.TRUE).build()).block();
             bookmarkRepository.save(Bookmark.builder().url("https://aws.amazon.com/telecom/?hp=tile&tile=industries").owner(admin.getUsername()).shared(Boolean.TRUE).build()).block();
-            System.err.println("users:" + this.userRepository.count().block());
-            System.err.println("bookmarks: " + this.bookmarkRepository.count().block());
-        }
-        System.out.println("=========");
-        for (Bookmark b : bookmarkRepository.findAll(Example.of(Bookmark.builder().owner("user").build())).toIterable()) {
-            System.out.println(b);
+
         }
 
-        System.out.println("=========");
-
-        for (Bookmark b : bookmarkRepository.findAll().filter(p -> ( p.getOwner().equals("user") && p.getShared().equals(Boolean.TRUE) )).toIterable()) {
-            System.out.println(b);
-        }
-        System.out.println("=========");
-        System.out.println(bookmarkRepository.findById("6037d17e46976343c953310d").filter( p -> p.getOwner().equals("user")).block());
-        System.out.println("=========");
-        for ( User u : userRepository.findAll().toIterable()) {
-            System.err.println(u);
-        }
+        System.out.println("users count:" + this.userRepository.count().block());
+        System.out.println("bookmarks count: " + this.bookmarkRepository.count().block());
 
     }
 }
