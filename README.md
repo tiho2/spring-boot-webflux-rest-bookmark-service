@@ -1,7 +1,14 @@
-# Bookmark service
-Spring 5 WebFlux REST service demo
+# Spring 5 WebFlux REST Bookmark service demo
+ 
 
-Service uses mongo db. 
+features:
+- user can sign in or login to the service
+- user can 
+    - create public or private bookmark
+    - patch shared field in stored bookmark
+    - list his bookmarks
+    - list shared (public) bookmarks, where user's shared bookmarks can be excluded
+
 
 ```shell
  docker run -p 27017:27017 -d mongo
