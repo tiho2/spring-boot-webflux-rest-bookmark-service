@@ -8,7 +8,7 @@ features:
     - patch shared field in stored bookmark
     - list his bookmarks
     - list shared (public) bookmarks, where user's shared bookmarks can be excluded
-
+- reactive mongodb with configured back pressure is used
 
 ```shell
  docker run -p 27017:27017 -d mongo
