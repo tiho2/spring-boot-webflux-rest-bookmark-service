@@ -27,7 +27,7 @@ public class PBKDF2Encoder implements PasswordEncoder {
             byte[] result = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512")
                     .generateSecret(new PBEKeySpec(rawPassword.toString().toCharArray(), secret.getBytes(), iteration, keylength))
                     .getEncoded();
-            return Base64.getEncoder().encodeToString(result);
+              return Base64.getEncoder().encodeToString(result);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             throw new RuntimeException(ex);
         }

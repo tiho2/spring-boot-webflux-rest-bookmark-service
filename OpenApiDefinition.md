@@ -12,74 +12,6 @@
         }
     ],
     "paths": {
-        "/api/v1/bookmarks/{id}": {
-            "get": {
-                "tags": [
-                    "bookmark-controller"
-                ],
-                "operationId": "getById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Bookmark"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "bookmark-controller"
-                ],
-                "operationId": "update",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Bookmark"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Bookmark"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/signin": {
             "post": {
                 "tags": [
@@ -140,33 +72,12 @@
                 }
             }
         },
-        "/api/v1/bookmarks": {
-            "get": {
-                "tags": [
-                    "bookmark-controller"
-                ],
-                "operationId": "listSharedBookmarks",
-                "responses": {
-                    "302": {
-                        "description": "Found",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Bookmark"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
+        "/api/v1/bookmarks/": {
             "post": {
                 "tags": [
                     "bookmark-controller"
                 ],
-                "operationId": "create_1",
+                "operationId": "update",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -191,12 +102,68 @@
                 }
             }
         },
-        "/api/v1/bookmarks/user": {
+        "/api/v1/bookmarks/{id}/{shared}": {
+            "patch": {
+                "tags": [
+                    "bookmark-controller"
+                ],
+                "operationId": "patchBookmark",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "shared",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Bookmark"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/bookmarks": {
             "get": {
                 "tags": [
                     "bookmark-controller"
                 ],
-                "operationId": "listMyBookmarks",
+                "operationId": "listBookmarks",
+                "parameters": [
+                    {
+                        "name": "scope",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "scopeDetail",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "302": {
                         "description": "Found",
@@ -214,45 +181,29 @@
                 }
             }
         },
-        "/api/v1/bookmarks/user/shared": {
+        "/api/v1/bookmarks/{id}": {
             "get": {
                 "tags": [
                     "bookmark-controller"
                 ],
-                "operationId": "listMySharedBookmarks",
-                "responses": {
-                    "302": {
-                        "description": "Found",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Bookmark"
-                                    }
-                                }
-                            }
+                "operationId": "getById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
-                }
-            }
-        },
-        "/api/v1/bookmarks/other": {
-            "get": {
-                "tags": [
-                    "bookmark-controller"
                 ],
-                "operationId": "listOtherBookmarks",
                 "responses": {
-                    "302": {
-                        "description": "Found",
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Bookmark"
-                                    }
+                                    "$ref": "#/components/schemas/Bookmark"
                                 }
                             }
                         }
@@ -263,23 +214,6 @@
     },
     "components": {
         "schemas": {
-            "Bookmark": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "url": {
-                        "type": "string"
-                    },
-                    "shared": {
-                        "type": "boolean"
-                    },
-                    "owner": {
-                        "type": "string"
-                    }
-                }
-            },
             "AuthRequest": {
                 "type": "object",
                 "properties": {
@@ -318,6 +252,9 @@
                             ]
                         }
                     },
+                    "accountNonExpired": {
+                        "type": "boolean"
+                    },
                     "authorities": {
                         "type": "array",
                         "items": {
@@ -329,9 +266,23 @@
                     },
                     "credentialsNonExpired": {
                         "type": "boolean"
+                    }
+                }
+            },
+            "Bookmark": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
                     },
-                    "accountNonExpired": {
+                    "url": {
+                        "type": "string"
+                    },
+                    "shared": {
                         "type": "boolean"
+                    },
+                    "owner": {
+                        "type": "string"
                     }
                 }
             }
