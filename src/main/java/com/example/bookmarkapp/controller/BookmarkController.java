@@ -44,9 +44,7 @@ public class BookmarkController {
                 //is USER_ALL case
                 return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().owner(username).build())).limitRate(40, 5);
         }
-
     }
-
 
     @GetMapping("api/v1/bookmarks/{id}")
     Mono<Bookmark> getById(@PathVariable String id) {
@@ -63,7 +61,6 @@ public class BookmarkController {
         }
         return Mono.empty();
     }
-
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("api/v1/bookmarks/")
@@ -96,14 +93,12 @@ public class BookmarkController {
                 }
             default:
                 return BookmarkListType.USER_ALL;
-
         }
     }
 
     private enum BookmarkListType {
         USER_ALL, USER_PRIVATE, USER_PUBLIC, SHARED_ALL, SHARED_OTHER
     }
-
 }
 
 
