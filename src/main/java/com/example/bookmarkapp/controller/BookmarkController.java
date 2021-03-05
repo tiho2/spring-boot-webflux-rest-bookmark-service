@@ -30,33 +30,21 @@ public class BookmarkController {
                                  @RequestParam String scope,
                                  @RequestParam String scopeDetail) {
         final String username = principal.getName();
-        switch (scope) {
-            case "user":
-                if (scopeDetail == null) {
-                    // user bookmarks
-                    return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().owner(username).build())).limitRate(40, 5);
-                } else if (scopeDetail.equalsIgnoreCase("public")) {
-                    // user public bookmarks
-                    return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().shared(Boolean.TRUE).owner(username).build())).limitRate(40, 5);
-                } else if (scopeDetail.equalsIgnoreCase("private")) {
-                    // user private bookmarks
-                    return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().shared(Boolean.FALSE).owner(username).build())).limitRate(40, 5);
-                }
-                // ignore scopeDetails if it contains some invalid value - the same case as it is null
-                return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().owner(username).build())).limitRate(40, 5);
-
-            case "shared":
-                if (scopeDetail != null && scopeDetail.equalsIgnoreCase("other")) {
-                    // shared bookmarks, application user's excluded
-                    // TODO: make an improvement to avoid need for filter()
-                    return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().shared(Boolean.TRUE).build())).filter(b -> (!b.getOwner().equals(username))).limitRate(40, 5);
-                }
-
+        switch (bookmarkListType(scope, scopeDetail)) {
+            case SHARED_ALL:
                 return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().shared(Boolean.TRUE).build())).limitRate(40, 5);
-
+            case SHARED_OTHER:
+                // TODO: make an improvement to avoid need for filter()
+                return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().shared(Boolean.TRUE).build())).filter(b -> (!b.getOwner().equals(username))).limitRate(40, 5);
+            case USER_PUBLIC:
+                return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().shared(Boolean.TRUE).owner(username).build())).limitRate(40, 5);
+            case USER_PRIVATE:
+                return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().shared(Boolean.FALSE).owner(username).build())).limitRate(40, 5);
+            default:
+                //is USER_ALL case
+                return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().owner(username).build())).limitRate(40, 5);
         }
-        // application user bookmarks
-        return this.bookmarkRepository.findAll(Example.of(Bookmark.builder().owner(username).build())).limitRate(40, 5);
+
     }
 
 
@@ -81,10 +69,42 @@ public class BookmarkController {
     @PostMapping("api/v1/bookmarks/")
     @PreAuthorize("hasRole('USER')")
     Mono<Bookmark> update(@RequestBody Bookmark bookmark, Principal principal) {
-        if(urlValidator.isValid(bookmark.getUrl())) {
+        if (urlValidator.isValid(bookmark.getUrl())) {
             return bookmarkRepository.save(Bookmark.builder().url(bookmark.getUrl()).shared(bookmark.getShared()).owner(principal.getName()).build());
         } else {
             return Mono.empty();
         }
     }
+
+    private BookmarkListType bookmarkListType(String scope, String details) {
+
+        scope = scope.trim().toLowerCase();
+        details = details.trim().toLowerCase();
+
+        switch (scope) {
+            case "shared":
+                if ("other".equals(details)) {
+                    return BookmarkListType.SHARED_OTHER;
+                }
+                return BookmarkListType.SHARED_ALL;
+            case "user":
+                switch (details) {
+                    case "public":
+                        return BookmarkListType.USER_PUBLIC;
+                    case "private":
+                        return BookmarkListType.USER_PRIVATE;
+                }
+            default:
+                return BookmarkListType.USER_ALL;
+
+        }
+    }
+
+    private enum BookmarkListType {
+        USER_ALL, USER_PRIVATE, USER_PUBLIC, SHARED_ALL, SHARED_OTHER
+    }
+
 }
+
+
+
